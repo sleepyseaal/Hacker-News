@@ -8,7 +8,7 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
-import { signUp } from "./src/controllers/auth/index.js";
+import { authRoutes } from "./src/routes/index.js";
 
 import { errorHandler, notFound } from "./src/middleWares/errorHandler.js";
 
@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.use("/api/auth", signUp);
+app.use("/api/auth", authRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

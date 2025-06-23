@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import prisma from "../lib/prisma.js";
 import AppError from "../utils/AppError.js";
 import jwt from "jsonwebtoken";
+const ACCESS_SECRET = process.env.ACCESS_SECRET;
 
 const authService = {
   async createUser(userName, password) {
