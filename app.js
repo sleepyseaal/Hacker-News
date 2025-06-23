@@ -6,6 +6,8 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
+import { errorHandler, notFound } from "./src/middleWares/errorHandler.js";
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100,
@@ -28,5 +30,8 @@ app.get("/", (req, res) => {
     data: null,
   });
 });
+
+app.use(notFound);
+app.use(errorHandler);
 
 export default app;
