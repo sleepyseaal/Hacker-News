@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
-import prisma from "../lib/prisma";
-import AppError from "../utils/AppError";
+import prisma from "../lib/prisma.js";
+import AppError from "../utils/AppError.js";
 import jwt from "jsonwebtoken";
 
 const authService = {

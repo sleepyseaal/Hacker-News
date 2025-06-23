@@ -1,10 +1,14 @@
 import express from "express";
 const app = express();
+import dotenv from "dotenv";
+dotenv.config();
 
 const ORIGIN = process.env.ORGIN || "localhost:3000";
 import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+
+import { signUp } from "./src/controllers/auth/index.js";
 
 import { errorHandler, notFound } from "./src/middleWares/errorHandler.js";
 
@@ -30,6 +34,8 @@ app.get("/", (req, res) => {
     data: null,
   });
 });
+
+app.use("/api/auth", signUp);
 
 app.use(notFound);
 app.use(errorHandler);
