@@ -43,6 +43,41 @@ const authService = {
     return user;
   },
 
+  async logoutDevice(userId, refreshToken) {
+    const tokens = await prisma.refreshToken.findMany({
+      where: {
+        userId,
+        revoked: false,
+        expiresAt: { gt: new Date() },
+      },
+    });
+
+    let validToken = null;
+    for (const token of tokens) {
+      const isValid = await bcrypt.compare(refreshToken, token.hashedToken);
+      if (isValid) {
+        validToken = token;
+        break;
+      }
+    }
+
+    if (!validToken) {
+      throw new AppError("Invalid refresh token", 401);
+    }
+
+    await prisma.refreshToken.update({
+      where: { id: validToken.id },
+      data: { revoked: true },
+    });
+  },
+
+  async logOutAll(userId) {
+    await prisma.refreshToken.updateMany({
+      where: { userId, revoked: false },
+      data: { revoked: true },
+    });
+  },
+
   generateAccessToken(payload) {
     return jwt.sign(payload, ACCESS_SECRET, { expiresIn: "15m" });
   },

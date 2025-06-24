@@ -13,30 +13,30 @@ async function refresh(req, res, next) {
 
     const payload = await authService.verifyRefreshToken(refreshToken);
 
-    const storedToken = await prisma.refreshToken.findFirst({
+    const tokens = await prisma.refreshToken.findMany({
       where: {
-        userId: payload.id,
+        userId: payload.userId,
         revoked: false,
         expiresAt: { gt: new Date() },
       },
     });
 
-    if (!storedToken) {
-      return next(new AppError("Refresh token not found", 401));
+    let validToken = null;
+    for (const token of tokens) {
+      const isValid = await bcrypt.compare(refreshToken, token.token);
+      if (isValid) {
+        validToken = token;
+        break;
+      }
     }
 
-    const isValid = await bcrypt.compare(refreshToken, storedToken.token);
-    if (!isValid) {
+    if (!validToken) {
       return next(new AppError("Invalid refresh token", 401));
     }
 
     await prisma.refreshToken.update({
-      where: {
-        id: storedToken.id,
-      },
-      data: {
-        revoked: true,
-      },
+      where: { id: validToken.id },
+      data: { revoked: true },
     });
 
     const newRefreshToken = authService.generateRefreshToken({
@@ -54,7 +54,7 @@ async function refresh(req, res, next) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
-      path: "api/auth/refresh",
+      path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 

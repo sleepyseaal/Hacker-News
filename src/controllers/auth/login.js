@@ -22,7 +22,7 @@ async function logIn(req, res, next) {
       secure: process.env.NODE_ENV === "production",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       sameSite: "Strict",
-      path: "/api/auth/refresh",
+      path: "/",
     });
 
     delete user.password; // Ensure password is not sent in the response
