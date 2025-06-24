@@ -1,7 +1,9 @@
 import express from "express";
 const app = express();
+
 import dotenv from "dotenv";
 dotenv.config();
+import cookieParser from "cookie-parser";
 
 const ORIGIN = process.env.ORGIN || "localhost:3000";
 import cors from "cors";
@@ -25,6 +27,7 @@ app.use(cors({ origin: ORIGIN }));
 app.use(helmet());
 app.use(limiter);
 
+app.use(cookieParser());
 app.use(express.json());
 
 app.get("/", (req, res) => {

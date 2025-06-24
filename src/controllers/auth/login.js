@@ -31,10 +31,7 @@ async function logIn(req, res, next) {
       success: true,
       message: "Logged in successfully",
       data: {
-        tokens: {
-          access: accesstoken,
-          refresh: refreshtoken,
-        },
+        token: accesstoken,
         user,
       },
     });

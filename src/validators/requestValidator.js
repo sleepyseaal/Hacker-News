@@ -1,6 +1,5 @@
 import { validationResult } from "express-validator";
 import AppError from "../utils/AppError.js";
-console.log("requestValidator middleware running");
 
 const requestValidator = (req, res, next) => {
   const result = validationResult(req);

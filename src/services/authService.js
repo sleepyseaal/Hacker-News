@@ -62,31 +62,32 @@ const authService = {
     });
   },
 
-  // async verifyRefreshToken(token) {
-  //   try {
-  //     const payload = jwt.verify(token, REFRESH_SECRET);
+  async verifyRefreshToken(token) {
+    try {
+      const payload = jwt.verify(token, REFRESH_SECRET);
 
-  //     const storedToken = await prisma.refreshToken.findFirst({
-  //       where: {
-  //         userId: payload.id,
-  //         expiresAt: { gt: new Date() },
-  //       },
-  //     });
+      const storedToken = await prisma.refreshToken.findFirst({
+        where: {
+          userId: payload.id,
+          expiresAt: { gt: new Date() },
+          revoked: false,
+        },
+      });
 
-  //     if (!storedToken) {
-  //       throw new AppError("Refresh token not found", 401);
-  //     }
+      if (!storedToken) {
+        throw new AppError("Refresh token not found", 401);
+      }
 
-  //     const isValid = await bcrypt.compare(token, storedToken.token);
-  //     if (!isValid) {
-  //       throw new AppError("Invalid refresh token", 401);
-  //     }
+      const isValidToken = await bcrypt.compare(token, storedToken.token);
+      if (!isValidToken) {
+        throw new AppError("Invalid refresh token", 401);
+      }
 
-  //     return payload;
-  //   } catch (err) {
-  //     throw new AppError("Invalid refresh token", 401);
-  //   }
-  // },
+      return payload;
+    } catch (err) {
+      throw new AppError("Invalid refresh token", 401);
+    }
+  },
 };
 
 export default authService;

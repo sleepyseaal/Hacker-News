@@ -29,7 +29,7 @@ async function signUp(req, res, next) {
       success: true,
       message: "User registered successfully",
       data: {
-        tokens: { accessToken, refreshToken },
+        token: { accessToken },
         user,
       },
     });
