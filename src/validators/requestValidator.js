@@ -4,7 +4,6 @@ console.log("requestValidator middleware running");
 
 const requestValidator = (req, res, next) => {
   const result = validationResult(req);
-  console.log("validation result:", result.array());
 
   if (!result.isEmpty()) {
     const errors = result.array().map((err) => ({

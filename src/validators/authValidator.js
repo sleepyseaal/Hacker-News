@@ -1,7 +1,7 @@
 import { body } from "express-validator";
 
 export const signUpValidator = [
-  body("username")
+  body("userName")
     .isString()
     .withMessage("Username must be a string")
     .trim()
@@ -22,4 +22,20 @@ export const signUpValidator = [
     .withMessage("Password must be between 6 and 20 characters long")
     .matches(/[A-Z]/)
     .withMessage("Password must contain at least one uppercase letter"),
+];
+
+export const logInValidator = [
+  body("userName")
+    .isString()
+    .withMessage("Username must be a string")
+    .trim()
+    .notEmpty()
+    .withMessage("Username is required"),
+
+  body("password")
+    .isString()
+    .withMessage("Password must be a string")
+    .trim()
+    .notEmpty()
+    .withMessage("Password is required"),
 ];
