@@ -1,9 +1,8 @@
-/* import crypto from "crypto";
+import crypto from "crypto";
 import prisma from "../../lib/prisma.js";
 import AppError from "../../utils/AppError.js";
 
-
-export const forgotPassword = async (req, res, next) => {
+const forgotPassword = async (req, res, next) => {
   try {
     const { email } = req.body;
 
@@ -19,7 +18,7 @@ export const forgotPassword = async (req, res, next) => {
       Date.now() + 1 * 60 * 60 * 1000 // 1 hour
     );
 
-    await prisma.passwordResetToken.create({
+    await prisma.passwordToken.create({
       data: {
         token,
         userId: user.id,
@@ -29,13 +28,14 @@ export const forgotPassword = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "Reset token created",
+      message: "A reset link has been sent to your email",
       data: {
-        resetLink: `/reset-password/${token}`, // for dev only
+        resetLink: `/api/auth/reset-password/${token}`,
       },
     });
   } catch (err) {
     next(err);
   }
 };
- */
+
+export default forgotPassword;

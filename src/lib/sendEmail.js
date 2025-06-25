@@ -29,9 +29,6 @@ export async function sendEmail({ to, subject, html }) {
     subject,
     html,
   });
-
-  console.log("📧 Email sent. Preview it here:");
-  console.log(nodemailer.getTestMessageUrl(info));
 }
 
 export default sendEmail;

@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-export const signUpValidator = [
+export const validateSignUp = [
   body("userName")
     .isString()
     .withMessage("Username must be a string")
@@ -24,7 +24,7 @@ export const signUpValidator = [
     .withMessage("Password must contain at least one uppercase letter"),
 ];
 
-export const logInValidator = [
+export const validateLogIn = [
   body("userName")
     .isString()
     .withMessage("Username must be a string")
@@ -40,15 +40,15 @@ export const logInValidator = [
     .withMessage("Password is required"),
 ];
 
-export const changePasswordValidator = [
+export const validateResetPW = [
   body("newPassword")
     .isString()
-    .withMessage("New password must be a string")
+    .withMessage("Password must be a string")
     .trim()
     .notEmpty()
-    .withMessage("New password is required")
+    .withMessage("Password is required")
     .isLength({ min: 6, max: 20 })
-    .withMessage("New password must be between 6 and 20 characters long")
+    .withMessage("Password must be between 6 and 20 characters long")
     .matches(/[A-Z]/)
-    .withMessage("New password must contain at least one uppercase letter"),
+    .withMessage("Password must contain at least one uppercase letter"),
 ];

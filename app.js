@@ -30,14 +30,6 @@ app.use(limiter);
 app.use(cookieParser());
 app.use(express.json());
 
-import sendEmail from "./src/lib/sendEmail.js";
-
-sendEmail({
-  to: "sickmido@gmail.com",
-  subject: "Hello",
-  html: "<h1>Hello</h1>",
-});
-
 app.get("/", (req, res) => {
   res.json({
     sucess: true,
