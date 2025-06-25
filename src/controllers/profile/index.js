@@ -1,5 +1,5 @@
 import changePassword from "./changePassword.js";
-import forgetPassword from "./forgetPassword.js";
-import updateProfile from "./updateProfile.js";
+/* import forgetPassword from "./forgetPassword.js";
+ */ import updateProfile from "./updateProfile.js";
 
-export { changePassword, forgetPassword, updateProfile };
+export { changePassword, updateProfile };
