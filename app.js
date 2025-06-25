@@ -10,7 +10,7 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 
-import { authRoutes } from "./src/routes/index.js";
+import { authRoutes, profileRoutes } from "./src/routes/index.js";
 
 import { errorHandler, notFound } from "./src/middleWares/errorHandler.js";
 
@@ -39,6 +39,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

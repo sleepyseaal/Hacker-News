@@ -39,3 +39,16 @@ export const logInValidator = [
     .notEmpty()
     .withMessage("Password is required"),
 ];
+
+export const changePasswordValidator = [
+  body("newPassword")
+    .isString()
+    .withMessage("New password must be a string")
+    .trim()
+    .notEmpty()
+    .withMessage("New password is required")
+    .isLength({ min: 6, max: 20 })
+    .withMessage("New password must be between 6 and 20 characters long")
+    .matches(/[A-Z]/)
+    .withMessage("New password must contain at least one uppercase letter"),
+];

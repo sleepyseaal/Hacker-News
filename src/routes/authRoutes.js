@@ -20,8 +20,8 @@ import requestValidator from "../validators/requestValidator.js";
 
 router.post("/signup", signUpValidator, requestValidator, signUp);
 router.post("/login", logInValidator, requestValidator, logIn);
-router.post("/logoutAll", verifyToken, logOutAll);
-router.post("/logoutDevice", verifyToken, logOutDevice);
+router.post("/logout", verifyToken, logOutDevice);
+router.post("/logout-all", verifyToken, logOutAll);
 router.post("/refresh", refresh);
 
 export default router;
