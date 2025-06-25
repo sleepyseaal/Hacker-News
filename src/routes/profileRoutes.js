@@ -1,17 +1,30 @@
 import { Router } from "express";
 const router = Router();
 
-import { changePassword } from "../controllers/profile/index.js";
-import { verifyToken } from "../middleWares/authMiddleware.js";
-import { changePasswordValidator } from "../validators/profileValidator.js";
-import requestValidator from "../validators/requestValidator.js";
+import { verifyToken } from "../middleWares/index.js";
+
+import {
+  validateChangePW,
+  validateProfile,
+  validateRequest,
+} from "../validators/index.js";
+
+import { changePassword, updateProfile } from "../controllers/profile/index.js";
 
 router.post(
   "/change-password",
-  changePasswordValidator,
-  requestValidator,
+  validateChangePW,
+  validateRequest,
   verifyToken,
   changePassword
+);
+
+router.post(
+  "/update-profile",
+  verifyToken,
+  validateProfile,
+  validateRequest,
+  updateProfile
 );
 
 export default router;

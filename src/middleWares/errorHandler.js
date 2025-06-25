@@ -1,6 +1,6 @@
 import AppError from "../utils/AppError.js";
 
-const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
   console.error(err.stack);
 
   const statusCode = err.statusCode || 500;
@@ -22,8 +22,6 @@ const errorHandler = (err, req, res, next) => {
   res.status(statusCode).json(response);
 };
 
-const notFound = (req, res, next) => {
+export const notFound = (req, res, next) => {
   next(new AppError("API endpoint not found", 404));
 };
-
-export { errorHandler, notFound };

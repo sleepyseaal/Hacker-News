@@ -1,7 +1,7 @@
 import AppError from "../utils/AppError.js";
 import jwt from "jsonwebtoken";
 
-function verifyToken(req, res, next) {
+export const verifyToken = (req, res, next) => {
   const authHeader = req.headers["authorization"];
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return next(new AppError("Access token not found", 401));
@@ -24,6 +24,4 @@ function verifyToken(req, res, next) {
     }
     return next(err);
   }
-}
-
-export { verifyToken };
+};

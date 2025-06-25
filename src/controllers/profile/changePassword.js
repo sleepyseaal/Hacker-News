@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import prisma from "../../lib/prisma.js";
-import { userSelect } from "../../lib/selects.js";
 import AppError from "../../utils/AppError.js";
 
 async function changePassword(req, res, next) {
@@ -10,14 +9,14 @@ async function changePassword(req, res, next) {
 
     const user = await prisma.user.findUnique({
       where: { id },
-      select: { ...userSelect, password: true },
+      select: { id: true, username: true, email: true },
     });
 
     if (!user) {
       return next(new AppError("User not found", 404));
     }
 
-    const isSamePassword = await bcrypt.compare(user.password, newPassword);
+    const isSamePassword = await bcrypt.compare(newPassword, user.password);
 
     if (isSamePassword) {
       return next(new AppError("New password is the same as the old one", 400));

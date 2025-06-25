@@ -22,6 +22,7 @@ async function logOutDevice(req, res, next) {
     res.status(200).json({
       success: true,
       message: "Logged out successfully",
+      data: null,
     });
   } catch (err) {
     next(err);
